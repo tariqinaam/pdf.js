@@ -30,6 +30,7 @@
   background-clip: content-box;
   border-image: url(images/shadow.png) 9 9 repeat;
   background-color: white;
+  flex-shrink: 0;
 }
 
 .pdfViewer.removePageBorders .page {
@@ -44,6 +45,33 @@
 .pdfViewer.singlePageView .page {
   margin: 0;
   border: none;
+}
+
+.pdfViewer.scrollHorizontal, .pdfViewer.scrollGrid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  min-width: -moz-min-content;
+  min-width: min-content;
+}
+
+.pdfViewer.scrollGrid {
+  flex-wrap: wrap;
+}
+
+.pdfViewer.scrollGrid.coverPage::before {
+  content: '';
+  width: 100%;
+}
+
+.pdfViewer.scrollHorizontal .page, .pdfViewer.scrollGrid .page {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+.pdfViewer.scrollGrid.coverPage .page:first-child {
+  order: -1;
 }
 
 .pdfViewer .page canvas {
@@ -63,6 +91,15 @@
   right: 0;
   bottom: 0;
   background: url('images/loading-icon.gif') center no-repeat;
+}
+
+.pdfPresentationMode .pdfViewer {
+  display: block;
+}
+
+.pdfPresentationMode .pdfViewer .page {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pdfPresentationMode:-webkit-full-screen .pdfViewer .page {

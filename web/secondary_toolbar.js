@@ -15,6 +15,7 @@
 
 import { CursorTool } from './pdf_cursor_tools';
 import { SCROLLBAR_PADDING } from './ui_utils';
+import { ScrollMode } from './pdf_viewer';
 
 /**
  * @typedef {Object} SecondaryToolbarOptions
@@ -76,6 +77,14 @@ class SecondaryToolbar {
         eventDetails: { tool: CursorTool.SELECT, }, close: true, },
       { element: options.cursorHandToolButton, eventName: 'switchcursortool',
         eventDetails: { tool: CursorTool.HAND, }, close: true, },
+      { element: options.scrollVerticalButton, eventName: 'switchscrollmode',
+        eventDetails: { mode: ScrollMode.VERTICAL, }, close: true, },
+      { element: options.scrollHorizontalButton, eventName: 'switchscrollmode',
+        eventDetails: { mode: ScrollMode.HORIZONTAL, }, close: true, },
+      { element: options.scrollGridButton, eventName: 'switchscrollmode',
+        eventDetails: { mode: ScrollMode.GRID, }, close: true, },
+      { element: options.scrollGridCoverButton, eventName: 'switchscrollmode',
+        eventDetails: { mode: ScrollMode.GRID_COVER, }, close: true, },
       { element: options.documentPropertiesButton,
         eventName: 'documentproperties', close: true, },
     ];
@@ -95,9 +104,10 @@ class SecondaryToolbar {
 
     this.reset();
 
-    // Bind the event listeners for click and cursor tool actions.
+    // Bind the event listeners for click, cursor tool, and scroll mode actions.
     this._bindClickListeners();
     this._bindCursorToolsListener(options);
+    this._bindScrollModeListener(options);
 
     // Bind the event listener for adjusting the 'max-height' of the toolbar.
     this.eventBus.on('resize', this._setMaxHeight.bind(this));
@@ -168,6 +178,25 @@ class SecondaryToolbar {
         case CursorTool.HAND:
           buttons.cursorHandToolButton.classList.add('toggled');
           break;
+      }
+    });
+  }
+
+  _bindScrollModeListener(buttons) {
+    this.eventBus.on('scrollmodechanged', function(evt) {
+      const scrollModeButtons = [];
+      scrollModeButtons[ScrollMode.VERTICAL] = buttons.scrollVerticalButton;
+      scrollModeButtons[ScrollMode.HORIZONTAL] = buttons.scrollHorizontalButton;
+      scrollModeButtons[ScrollMode.GRID] = buttons.scrollGridButton;
+      scrollModeButtons[ScrollMode.GRID_COVER] = buttons.scrollGridCoverButton;
+
+      for (let i = 0; i < scrollModeButtons.length; i++) {
+        const { classList, } = scrollModeButtons[i];
+        if (i === evt.mode) {
+          classList.add('toggled');
+        } else {
+          classList.remove('toggled');
+        }
       }
     });
   }

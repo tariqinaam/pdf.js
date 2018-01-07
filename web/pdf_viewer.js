@@ -17,12 +17,22 @@ import { getVisibleElements, scrollIntoView } from './ui_utils';
 import { BaseViewer } from './base_viewer';
 import { shadow } from 'pdfjs-lib';
 
+const ScrollMode = {
+  VERTICAL: 0, // The default value.
+  HORIZONTAL: 1,
+  GRID: 2,
+  GRID_COVER: 3,
+};
+
 class PDFViewer extends BaseViewer {
   get _setDocumentViewerElement() {
     return shadow(this, '_setDocumentViewerElement', this.viewer);
   }
 
   _scrollIntoView({ pageDiv, pageSpot = null, }) {
+    if (!pageSpot && this._isHorizontallyScrolling) {
+      pageSpot = { left: 0, top: 0, };
+    }
     scrollIntoView(pageDiv, pageSpot);
   }
 
@@ -76,8 +86,28 @@ class PDFViewer extends BaseViewer {
       location: this._location,
     });
   }
+
+  setScrollMode(mode) {
+    this.viewer.classList.remove('scrollHorizontal', 'scrollGrid', 'coverPage');
+    this._isHorizontallyScrolling = false;
+    switch (mode) {
+      case ScrollMode.HORIZONTAL:
+        this._isHorizontallyScrolling = true;
+        this.viewer.classList.add('scrollHorizontal');
+        break;
+      case ScrollMode.GRID_COVER:
+        this.viewer.classList.add('coverPage');
+        // fallthrough
+      case ScrollMode.GRID:
+        this.viewer.classList.add('scrollGrid');
+        break;
+    }
+    this.eventBus.dispatch('scrollmodechanged', { mode, });
+    this.scrollPageIntoView({ pageNumber: this._currentPageNumber, });
+  }
 }
 
 export {
   PDFViewer,
+  ScrollMode,
 };

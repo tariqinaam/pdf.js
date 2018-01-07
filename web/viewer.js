@@ -95,6 +95,10 @@ function getViewerConfiguration() {
       pageRotateCcwButton: document.getElementById('pageRotateCcw'),
       cursorSelectToolButton: document.getElementById('cursorSelectTool'),
       cursorHandToolButton: document.getElementById('cursorHandTool'),
+      scrollVerticalButton: document.getElementById('scrollVertical'),
+      scrollHorizontalButton: document.getElementById('scrollHorizontal'),
+      scrollGridButton: document.getElementById('scrollGrid'),
+      scrollGridCoverButton: document.getElementById('scrollGridCover'),
       documentPropertiesButton: document.getElementById('documentProperties'),
     },
     fullscreen: {

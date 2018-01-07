@@ -1065,6 +1065,22 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   content: url(images/secondaryToolbarButton-handTool.png);
 }
 
+.secondaryToolbarButton.scrollVertical::before {
+  content: url(images/secondaryToolbarButton-scrollVertical.png);
+}
+
+.secondaryToolbarButton.scrollHorizontal::before {
+  content: url(images/secondaryToolbarButton-scrollHorizontal.png);
+}
+
+.secondaryToolbarButton.scrollGrid::before {
+  content: url(images/secondaryToolbarButton-scrollGrid.png);
+}
+
+.secondaryToolbarButton.scrollGridCover::before {
+  content: url(images/secondaryToolbarButton-scrollGridCover.png);
+}
+
 .secondaryToolbarButton.documentProperties::before {
   content: url(images/secondaryToolbarButton-documentProperties.png);
 }
@@ -1797,6 +1813,22 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
 
   .secondaryToolbarButton.handTool::before {
     content: url(images/secondaryToolbarButton-handTool@2x.png);
+  }
+
+  .secondaryToolbarButton.scrollVertical::before {
+    content: url(images/secondaryToolbarButton-scrollVertical@2x.png);
+  }
+
+  .secondaryToolbarButton.scrollHorizontal::before {
+    content: url(images/secondaryToolbarButton-scrollHorizontal@2x.png);
+  }
+
+  .secondaryToolbarButton.scrollGrid::before {
+    content: url(images/secondaryToolbarButton-scrollGrid@2x.png);
+  }
+
+  .secondaryToolbarButton.scrollGridCover::before {
+    content: url(images/secondaryToolbarButton-scrollGridCover@2x.png);
   }
 
   .secondaryToolbarButton.documentProperties::before {
